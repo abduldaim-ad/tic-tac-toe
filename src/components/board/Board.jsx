@@ -92,7 +92,7 @@ const Board = ({ playerName, playerTurn, setPlayerTurn, symbol, setSymbol, statu
             div{
                 width:95%;
                 height:50vh;
-                margin:5%;
+                margin:2.5%;
             }
         }
     `
