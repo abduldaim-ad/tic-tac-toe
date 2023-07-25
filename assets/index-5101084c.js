@@ -155,7 +155,7 @@ Error generating stack: `+o.message+`
             div{
                 width:95%;
                 height:50vh;
-                margin:5%;
+                margin:2.5%;
             }
         }
     `,[w,_]=L.useState(!1),p=()=>{v(h),_(!1),n(t===e?"Player 2":e),l(r==="O"?"X":"O"),d(r==="O"?"X Turn":"O Turn")};return G.jsxs(y,{children:[G.jsx("h1",{style:{backgroundColor:"grey",marginTop:"0"},children:s}),G.jsx("div",{children:g.map((f,m)=>G.jsx(e0,{id:m,tile:f,symbol:r,setSymbol:l,playerTurn:t,setPlayerTurn:n,tileData:g,setTileData:v,status:o,setStatus:i,disableBtn:w,setDisableBtn:_,disableRestart:a,playerName:e,setShowText:d},m))}),G.jsx("h1",{children:o}),G.jsx("button",{onClick:()=>p(),style:{margin:"1% 47%",backgroundColor:w?"red":"grey",color:"white",padding:"1%",cursor:w?"pointer":"arrow"},disabled:!w,children:"Restart"})]})},n0=()=>{const e=is(),[t,n]=L.useState(e.state.userName),[r,l]=L.useState(e.state.userName),[o,i]=L.useState(e.state.userSymbol),[a,u]=L.useState(""),[s,d]=L.useState(!0);return G.jsx(G.Fragment,{children:G.jsx(t0,{playerName:r,playerTurn:t,setPlayerTurn:n,symbol:o,setSymbol:i,status:a,setStatus:u,disableRestart:s,setDisableRestart:d})})},r0=Kv([{path:"/tic-tac-toe/",element:G.jsx(by,{})},{path:"/tic-tac-toe/game",element:G.jsx(n0,{})}]);Ep(document.getElementById("root")).render(G.jsx(Vv,{router:r0}));
