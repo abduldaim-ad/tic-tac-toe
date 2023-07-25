@@ -90,9 +90,9 @@ const Board = ({ playerName, playerTurn, setPlayerTurn, symbol, setSymbol, statu
 
         @media screen and (max-width:460px){
             div{
-                width:95%;
+                width:100%;
                 height:50vh;
-                margin:2.5%;
+                margin:0%;
             }
         }
     `
