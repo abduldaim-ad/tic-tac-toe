@@ -8,11 +8,11 @@ import Game from "./components/Game";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/tic-tac-toe/",
     element: <App />,
   },
   {
-    path: "/game",
+    path: "/tic-tac-toe/game",
     element: <Game />,
   },
 ]);

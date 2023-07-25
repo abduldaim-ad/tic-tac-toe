@@ -61,7 +61,7 @@ const User = () => {
                 break
             }
 
-        navigate('/game', { state: { userName: nameRef.current.value, userSymbol: tempVal } })
+        navigate('/tic-tac-toe/game', { state: { userName: nameRef.current.value, userSymbol: tempVal } })
     }
 
     return (
