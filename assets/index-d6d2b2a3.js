@@ -153,7 +153,7 @@ Error generating stack: `+o.message+`
 
         @media screen and (max-width:460px){
             div{
-                width:90%;
+                width:95%;
                 height:50vh;
                 margin:5%;
             }
