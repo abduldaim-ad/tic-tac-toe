@@ -105,6 +105,7 @@ const Tile = ({ id, tile, symbol, setSymbol, playerTurn, playerName, setShowText
         }
 
         if (tempArray.length) {
+            setShowText("Game Over");
             const finalState = newState.map((tile, index) => {
                 if (index === tempArray[0] || index === tempArray[1] || index === tempArray[2]) {
                     return { ...tile, strikeMe: true }

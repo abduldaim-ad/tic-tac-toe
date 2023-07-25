@@ -11,9 +11,12 @@ const Board = ({ playerName, playerTurn, setPlayerTurn, symbol, setSymbol, statu
     const [showText, setShowText] = useState("")
 
     useEffect(() => {
+        setShowText(`Hi ${playerTurn}! Welcome to Tic Tac Toe! Your Symbol is ${symbol}`)
+    }, [])
+
+    useEffect(() => {
         if (status === `${playerTurn} Wins` || status === "Game Draw")
             setDisableBtn(true)
-        setShowText(`Hi ${playerTurn}! Welcome to Tic Tac Toe! Your Symbol is ${symbol}`)
     }, [status])
 
     const initialState = [
@@ -101,6 +104,7 @@ const Board = ({ playerName, playerTurn, setPlayerTurn, symbol, setSymbol, statu
         setDisableBtn(false)
         setPlayerTurn(playerTurn === playerName ? "Player 2" : playerName)
         setSymbol(symbol === "O" ? "X" : "O")
+        symbol === "O" ? setShowText("X Turn") : setShowText("O Turn")
     }
 
     return (
