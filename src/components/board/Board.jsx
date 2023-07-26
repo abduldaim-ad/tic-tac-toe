@@ -111,6 +111,9 @@ const Board = ({ playerName, playerTurn, setPlayerTurn, symbol, setSymbol, statu
         <Wrapper>
             <h1 style={{ backgroundColor: "grey", marginTop: "0" }}>{showText}</h1>
             <div>
+                <svg height="500" width="500" style={{ position: "absolute" }}>
+                    <line x1="0" y1="80" x2="600" y2="80" style={{ stroke: "rgb(255,0,0)", strokeWidth: "5" }} />
+                </svg>
                 {
                     tileData.map((tile, id) => {
                         return (
