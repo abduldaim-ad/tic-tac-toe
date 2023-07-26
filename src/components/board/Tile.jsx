@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components'
 // import tileData from './tileData';
 
-const Tile = ({ id, tile, symbol, setSymbol, playerTurn, playerName, setShowText, setPlayerTurn, tileData, setTileData, status, setStatus, disableBtn, setDisableBtn }) => {
+const Tile = ({ id, tile, symbol, setSymbol, playerTurn, playerName, player2Name, setShowText, setPlayerTurn, tileData, setTileData, status, setStatus, disableBtn, setDisableBtn, setVertices }) => {
 
     console.log(id)
 
@@ -38,15 +38,11 @@ const Tile = ({ id, tile, symbol, setSymbol, playerTurn, playerName, setShowText
         }
     `
 
-    const checkWin = (newState) => {
-
-    }
-
     const handleTileClick = () => {
         let noNumber = true;
         const newState = tileData.map((tile, index) => {
             if (id === index && !isNaN(tile.tileVal)) {
-                playerTurn === playerName ? setPlayerTurn("Player 2") : setPlayerTurn(playerName);
+                playerTurn === playerName ? setPlayerTurn(player2Name) : setPlayerTurn(playerName);
                 symbol === "O" ? setSymbol("X") : setSymbol("O");
                 setShowText(symbol === "O" ? "X Turn" : "O Turn");
                 return { ...tile, tileVal: symbol }
@@ -63,41 +59,105 @@ const Tile = ({ id, tile, symbol, setSymbol, playerTurn, playerName, setShowText
             tempArray = [0, 1, 2];
             setStatus(`${playerTurn} Wins`)
             setDisableBtn(true)
+            setVertices({
+                h: '420',
+                w: '500',
+                x1: '0',
+                y1: '72.5',
+                x2: '700',
+                y2: '72.5',
+            })
         }
         else if (newState[3].tileVal === newState[4].tileVal && newState[4].tileVal === newState[5].tileVal) {
             tempArray = [3, 4, 5];
             setStatus(`${playerTurn} Wins`)
             setDisableBtn(true)
+            setVertices({
+                h: '420',
+                w: '500',
+                x1: '0',
+                y1: '222.5',
+                x2: '700',
+                y2: '222.5',
+            })
         }
         else if (newState[6].tileVal === newState[7].tileVal && newState[7].tileVal === newState[8].tileVal) {
             tempArray = [6, 7, 8];
             setStatus(`${playerTurn} Wins`)
             setDisableBtn(true)
+            setVertices({
+                h: '420',
+                w: '500',
+                x1: '0',
+                y1: '372',
+                x2: '700',
+                y2: '372',
+            })
         }
         else if (newState[0].tileVal === newState[3].tileVal && newState[3].tileVal === newState[6].tileVal) {
             tempArray = [0, 3, 6];
             setStatus(`${playerTurn} Wins`)
             setDisableBtn(true)
+            setVertices({
+                h: '420',
+                w: '500',
+                x1: '70',
+                y1: '20',
+                x2: '70',
+                y2: '600',
+            })
         }
         else if (newState[1].tileVal === newState[4].tileVal && newState[4].tileVal === newState[7].tileVal) {
             tempArray = [1, 4, 7];
             setStatus(`${playerTurn} Wins`)
             setDisableBtn(true)
+            setVertices({
+                h: '420',
+                w: '500',
+                x1: '250',
+                y1: '20',
+                x2: '250',
+                y2: '600',
+            })
         }
         else if (newState[2].tileVal === newState[5].tileVal && newState[5].tileVal === newState[8].tileVal) {
             tempArray = [2, 5, 8];
             setStatus(`${playerTurn} Wins`)
             setDisableBtn(true)
+            setVertices({
+                h: '420',
+                w: '500',
+                x1: '430',
+                y1: '20',
+                x2: '430',
+                y2: '600',
+            })
         }
         else if (newState[0].tileVal === newState[4].tileVal && newState[4].tileVal === newState[8].tileVal) {
             tempArray = [0, 4, 8];
             setStatus(`${playerTurn} Wins`)
             setDisableBtn(true)
+            setVertices({
+                h: '420',
+                w: '500',
+                x1: "0",
+                y1: "20",
+                x2: "700",
+                y2: "600",
+            })
         }
         else if (newState[2].tileVal === newState[4].tileVal && newState[4].tileVal === newState[6].tileVal) {
-            tempArray = [2, 4, 5];
+            tempArray = [2, 4, 6];
             setStatus(`${playerTurn} Wins`)
             setDisableBtn(true)
+            setVertices({
+                h: '420',
+                w: '500',
+                x1: '490',
+                y1: '20',
+                x2: '0',
+                y2: '430',
+            })
         }
         else if (!noNumber) {
             setStatus(`Game Draw`)

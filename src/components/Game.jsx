@@ -9,13 +9,15 @@ const Game = () => {
 
     const [playerTurn, setPlayerTurn] = useState(location.state.userName);
     const [playerName, setPlayerName] = useState(location.state.userName);
+    const [player2Name, setPlayer2Name] = useState(location.state.user2Name);
+    const [gameMode, setGetMode] = useState(location.state.gameMode);
     const [symbol, setSymbol] = useState(location.state.userSymbol);
     const [status, setStatus] = useState("");
     const [disableRestart, setDisableRestart] = useState(true);
 
     return (
         <>
-            <Board playerName={playerName} playerTurn={playerTurn} setPlayerTurn={setPlayerTurn} symbol={symbol} setSymbol={setSymbol} status={status} setStatus={setStatus} disableRestart={disableRestart} setDisableRestart={setDisableRestart} />
+            <Board playerName={playerName} player2Name={player2Name} playerTurn={playerTurn} setPlayerTurn={setPlayerTurn} symbol={symbol} setSymbol={setSymbol} status={status} setStatus={setStatus} disableRestart={disableRestart} setDisableRestart={setDisableRestart} gameMode={gameMode} />
         </>
     )
 }
