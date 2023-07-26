@@ -41,9 +41,9 @@ const Board = ({ playerName, player2Name, playerTurn, setPlayerTurn, symbol, set
 
     @media screen and (max-width:460px){
         div{
-            width:90%;
+            width:100%;
             height:50vh;
-            margin:5%;
+            margin:0%;
         }
     }
 `
