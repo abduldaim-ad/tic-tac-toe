@@ -54,10 +54,11 @@ const Tile = ({ id, tile, symbol, setSymbol, playerTurn, playerName, player2Name
         noNumber = !!newState.find((item) => typeof item.tileVal === 'number');
         setTileData(newState)
 
-        let tempArray;
+        let tempArray, win;
         if (newState[0].tileVal === newState[1].tileVal && newState[1].tileVal === newState[2].tileVal) {
             tempArray = [0, 1, 2];
             setStatus(`${playerTurn} Wins`)
+            win = `${playerTurn} Wins`;
             setDisableBtn(true)
             setVertices({
                 h: '420',
@@ -71,6 +72,7 @@ const Tile = ({ id, tile, symbol, setSymbol, playerTurn, playerName, player2Name
         else if (newState[3].tileVal === newState[4].tileVal && newState[4].tileVal === newState[5].tileVal) {
             tempArray = [3, 4, 5];
             setStatus(`${playerTurn} Wins`)
+            win = `${playerTurn} Wins`;
             setDisableBtn(true)
             setVertices({
                 h: '420',
@@ -84,6 +86,7 @@ const Tile = ({ id, tile, symbol, setSymbol, playerTurn, playerName, player2Name
         else if (newState[6].tileVal === newState[7].tileVal && newState[7].tileVal === newState[8].tileVal) {
             tempArray = [6, 7, 8];
             setStatus(`${playerTurn} Wins`)
+            win = `${playerTurn} Wins`;
             setDisableBtn(true)
             setVertices({
                 h: '420',
@@ -97,6 +100,7 @@ const Tile = ({ id, tile, symbol, setSymbol, playerTurn, playerName, player2Name
         else if (newState[0].tileVal === newState[3].tileVal && newState[3].tileVal === newState[6].tileVal) {
             tempArray = [0, 3, 6];
             setStatus(`${playerTurn} Wins`)
+            win = `${playerTurn} Wins`;
             setDisableBtn(true)
             setVertices({
                 h: '420',
@@ -110,6 +114,7 @@ const Tile = ({ id, tile, symbol, setSymbol, playerTurn, playerName, player2Name
         else if (newState[1].tileVal === newState[4].tileVal && newState[4].tileVal === newState[7].tileVal) {
             tempArray = [1, 4, 7];
             setStatus(`${playerTurn} Wins`)
+            win = `${playerTurn} Wins`;
             setDisableBtn(true)
             setVertices({
                 h: '420',
@@ -123,6 +128,7 @@ const Tile = ({ id, tile, symbol, setSymbol, playerTurn, playerName, player2Name
         else if (newState[2].tileVal === newState[5].tileVal && newState[5].tileVal === newState[8].tileVal) {
             tempArray = [2, 5, 8];
             setStatus(`${playerTurn} Wins`)
+            win = `${playerTurn} Wins`;
             setDisableBtn(true)
             setVertices({
                 h: '420',
@@ -136,6 +142,7 @@ const Tile = ({ id, tile, symbol, setSymbol, playerTurn, playerName, player2Name
         else if (newState[0].tileVal === newState[4].tileVal && newState[4].tileVal === newState[8].tileVal) {
             tempArray = [0, 4, 8];
             setStatus(`${playerTurn} Wins`)
+            win = `${playerTurn} Wins`;
             setDisableBtn(true)
             setVertices({
                 h: '420',
@@ -149,6 +156,7 @@ const Tile = ({ id, tile, symbol, setSymbol, playerTurn, playerName, player2Name
         else if (newState[2].tileVal === newState[4].tileVal && newState[4].tileVal === newState[6].tileVal) {
             tempArray = [2, 4, 6];
             setStatus(`${playerTurn} Wins`)
+            win = `${playerTurn} Wins`;
             setDisableBtn(true)
             setVertices({
                 h: '420',
@@ -161,11 +169,79 @@ const Tile = ({ id, tile, symbol, setSymbol, playerTurn, playerName, player2Name
         }
         else if (!noNumber) {
             setStatus(`Game Draw`)
+            win = "Game Draw";
+            setShowText("Game Over");
             setDisableBtn(true)
         }
 
-        if (tempArray.length) {
+        console.log("Drawwww1", win, tempArray)
+
+        if (tempArray?.length > 0 || win == "Game Draw") {
+            const existingData = (JSON.parse(localStorage.getItem('gameData')) || []);
+            const userIndex1 = existingData.findIndex((item) => item.userName === playerName);
+            const userIndex2 = existingData.findIndex((item) => item.userName === player2Name);
+
+
+            if (userIndex1 !== -1) {
+                if (win === `${playerName} Wins`) {
+                    existingData[userIndex1].win = existingData[userIndex1].win + 1;
+                }
+                else if (win === `${player2Name} Wins`) {
+                    existingData[userIndex1].lose = existingData[userIndex1].lose + 1;
+                }
+                else if (win === "Game Draw")
+                    existingData[userIndex1].draw = existingData[userIndex1].draw + 1;
+            } else {
+                let tempData;
+                if (win === `${playerName} Wins`) {
+                    tempData = { userName: playerName, win: 1, lose: 0, draw: 0 };
+                }
+                else if (win === `${player2Name} Wins`) {
+                    tempData = { userName: playerName, win: 0, lose: 1, draw: 0 };
+                }
+                else if (win === "Game Draw") {
+                    tempData = { userName: playerName, win: 0, lose: 0, draw: 1 };
+                }
+                existingData.push(tempData);
+            }
+
+            if (userIndex2 !== -1) {
+                if (win === `${player2Name} Wins`) {
+                    existingData[userIndex2].win = existingData[userIndex2].win + 1;
+                }
+                else if (win === `${playerName} Wins`) {
+                    existingData[userIndex2].lose = existingData[userIndex2].lose + 1;
+                }
+                else if (win === "Game Draw")
+                    existingData[userIndex2].draw = existingData[userIndex2].draw + 1;
+            } else {
+                let tempData = {};
+                if (win === `${player2Name} Wins`) {
+                    console.log('here --->', player2Name)
+                    tempData.userName = player2Name;
+                    tempData.win = 1;
+                    tempData.lose = 0;
+                    tempData.draw = 0;
+                }
+                else if (win === `${playerName} Wins`) {
+                    tempData.userName = player2Name;
+                    tempData.win = 0;
+                    tempData.lose = 1;
+                    tempData.draw = 0;
+                }
+                else if (win === "Game Draw") {
+                    tempData = { userName: player2Name, win: 0, lose: 0, draw: 1 };
+                }
+                console.log('tempData ---->', tempData)
+                existingData.push(tempData);
+            }
+
+            console.log('existingData', existingData)
+
+            localStorage.setItem('gameData', JSON.stringify(existingData));
+
             setShowText("Game Over");
+            setPlayerTurn(playerName)
             const finalState = newState.map((tile, index) => {
                 if (index === tempArray[0] || index === tempArray[1] || index === tempArray[2]) {
                     return { ...tile, strikeMe: true }
@@ -176,6 +252,11 @@ const Tile = ({ id, tile, symbol, setSymbol, playerTurn, playerName, player2Name
             })
             setTileData(finalState)
         }
+
+
+        // status === `${playerName} Wins` || status === 'Game Draw'
+        //     ? localStorage.setItem("gameData", JSON.stringify([{ userName: playerName, win: 1, lose: 0 }, { userName: player2Name, win: 0, lose: 1, draw: 0 }]))
+        //     : localStorage.setItem("gameData", JSON.stringify([{ userName: player2Name, win: 1, lose: 0 }, { userName: playerName, win: 0, lose: 1, draw: 0 }]))
 
     }
 

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components"
 
@@ -11,7 +11,7 @@ const User = () => {
     const [color, setColor] = useState(true)
     const [gameMode, setGameMode] = useState("one");
     const [playerName, setPlayerName] = useState("");
-    const [player2Name, setPlayer2Name] = useState("Computer");
+    const [player2Name, setPlayer2Name] = useState("");
     const [symbol, setSymbol] = useState("");
     const [symbol2, setSymbol2] = useState("");
     const [isEnabled0, setIsEnabled0] = useState(true)
@@ -67,8 +67,8 @@ const User = () => {
     }
 
     const handleName2Change = () => {
-        setPlayer2Name(name2Ref.current.value)
-        name2Ref.current.value ? setColor(true) : setColor(false)
+        setPlayer2Name(name2Ref.current.value);
+        (name2Ref.current.value && playerName !== name2Ref.current.value) ? setColor(true) : setColor(false)
     }
 
     const handleNext1 = () => {
@@ -95,7 +95,7 @@ const User = () => {
                 break
             }
         setColor(false)
-        gameMode === "two" ? setIsEnabled2(true) : navigate('/tic-tac-toe/game', { state: { userName: playerName, user2Name: player2Name, userSymbol: tempVal } })
+        gameMode === "two" ? setIsEnabled2(true) : navigate('/tic-tac-toe/game', { state: { userName: playerName, user2Name: "Computer", userSymbol: tempVal } })
     }
 
     const handleStartGame = () => {
@@ -130,7 +130,7 @@ const User = () => {
 
                 {isEnabled2 && <><input type="text" placeholder="Player 2 Name..." value={player2Name} onChange={handleName2Change} ref={name2Ref} autoFocus />
                     <h3>Symbol: {symbol2}</h3>
-                    <button disabled={name2Ref.current.value ? false : true} onClick={handleStartGame}>Start Game</button></>}
+                    <button disabled={(name2Ref.current.value && playerName !== name2Ref.current.value) ? false : true} onClick={handleStartGame}>Start Game</button></>}
 
             </div>
         </Wrapper>

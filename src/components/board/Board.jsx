@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components'
 import Tile from './Tile'
+import Modal from '../modal/Modal'
 
 // import tileData from './tileData'
 
@@ -28,6 +29,19 @@ const Board = ({ playerName, player2Name, playerTurn, setPlayerTurn, symbol, set
         border:2px solid #1DE7D3;
         box-shadow:2px 2px 5px 5px #1DE7D3;
         border-radius:10%;
+    }
+
+    .stats-btn{
+        color:white;
+        margin:0 1%;
+        padding:0.5%;
+        cursor:pointer;
+        background-color:green;
+        font-weight:bold;
+        &:hover{
+            color:green;
+            background-color:#fff;
+        }
     }
 
     @media screen and (max-width:1024px){
@@ -97,6 +111,133 @@ const Board = ({ playerName, player2Name, playerTurn, setPlayerTurn, symbol, set
     })
     const [tileData, setTileData] = useState(initialState)
     const [disableBtn, setDisableBtn] = useState(false)
+    const [showModal, setShowModal] = useState(false)
+
+    const checkWin = (copy) => {
+        let tempArray = [], noNumber = true;
+        noNumber = !!copy.find((item) => typeof item.tileVal === 'number');
+        if (copy[0].tileVal === copy[1].tileVal && copy[1].tileVal === copy[2].tileVal) {
+            tempArray = [0, 1, 2];
+            setStatus(`${playerTurn} Wins`)
+            setDisableBtn(true)
+            setVertices({
+                h: '420',
+                w: '500',
+                x1: '0',
+                y1: '72.5',
+                x2: '700',
+                y2: '72.5',
+            })
+        }
+        else if (copy[3].tileVal === copy[4].tileVal && copy[4].tileVal === copy[5].tileVal) {
+            tempArray = [3, 4, 5];
+            setStatus(`${playerTurn} Wins`)
+            setDisableBtn(true)
+            setVertices({
+                h: '420',
+                w: '500',
+                x1: '0',
+                y1: '222.5',
+                x2: '700',
+                y2: '222.5',
+            })
+        }
+        else if (copy[6].tileVal === copy[7].tileVal && copy[7].tileVal === copy[8].tileVal) {
+            tempArray = [6, 7, 8];
+            setStatus(`${playerTurn} Wins`)
+            setDisableBtn(true)
+            setVertices({
+                h: '420',
+                w: '500',
+                x1: '0',
+                y1: '372',
+                x2: '700',
+                y2: '372',
+            })
+        }
+        else if (copy[0].tileVal === copy[3].tileVal && copy[3].tileVal === copy[6].tileVal) {
+            tempArray = [0, 3, 6];
+            setStatus(`${playerTurn} Wins`)
+            setDisableBtn(true)
+            setVertices({
+                h: '420',
+                w: '500',
+                x1: '70',
+                y1: '20',
+                x2: '70',
+                y2: '600',
+            })
+        }
+        else if (copy[1].tileVal === copy[4].tileVal && copy[4].tileVal === copy[7].tileVal) {
+            tempArray = [1, 4, 7];
+            setStatus(`${playerTurn} Wins`)
+            setDisableBtn(true)
+            setVertices({
+                h: '420',
+                w: '500',
+                x1: '250',
+                y1: '20',
+                x2: '250',
+                y2: '600',
+            })
+        }
+        else if (copy[2].tileVal === copy[5].tileVal && copy[5].tileVal === copy[8].tileVal) {
+            tempArray = [2, 5, 8];
+            setStatus(`${playerTurn} Wins`)
+            setDisableBtn(true)
+            setVertices({
+                h: '420',
+                w: '500',
+                x1: '430',
+                y1: '20',
+                x2: '430',
+                y2: '600',
+            })
+        }
+        else if (copy[0].tileVal === copy[4].tileVal && copy[4].tileVal === copy[8].tileVal) {
+            tempArray = [0, 4, 8];
+            setStatus(`${playerTurn} Wins`)
+            setDisableBtn(true)
+            setVertices({
+                h: '420',
+                w: '500',
+                x1: "0",
+                y1: "20",
+                x2: "700",
+                y2: "600",
+            })
+        }
+        else if (copy[2].tileVal === copy[4].tileVal && copy[4].tileVal === copy[6].tileVal) {
+            tempArray = [2, 4, 6];
+            setStatus(`${playerTurn} Wins`)
+            setDisableBtn(true)
+            setVertices({
+                h: '420',
+                w: '500',
+                x1: '490',
+                y1: '20',
+                x2: '0',
+                y2: '430',
+            })
+        }
+        else if (!noNumber) {
+            setStatus(`Game Draw`)
+            setDisableBtn(true)
+        }
+
+        if (tempArray.length) {
+            setShowText("Game Over");
+            const finalState = copy.map((tile, index) => {
+                if (index === tempArray[0] || index === tempArray[1] || index === tempArray[2]) {
+                    return { ...tile, strikeMe: true }
+                }
+                else {
+                    return tile
+                }
+            })
+            setTileData(finalState)
+        }
+    }
 
     useEffect(() => {
         setShowText(`Hi ${playerTurn}! Welcome to Tic Tac Toe! Your Symbol is ${symbol}`)
@@ -107,13 +248,12 @@ const Board = ({ playerName, player2Name, playerTurn, setPlayerTurn, symbol, set
             setDisableBtn(true)
     }, [status])
 
-
     useEffect(() => {
         if (playerTurn === "Computer") {
             let stop = false;
+            const copy = [...tileData];
             while (!stop) {
                 const computerId = Math.floor(Math.random() * 10);
-                const copy = [...tileData];
                 const find = copy.find((tile, i) => !isNaN(tile.tileVal) && i == computerId);
                 if (find) {
                     playerTurn === playerName ? setPlayerTurn(player2Name) : setPlayerTurn(playerName);
@@ -122,7 +262,6 @@ const Board = ({ playerName, player2Name, playerTurn, setPlayerTurn, symbol, set
                     find.tileVal = symbol;
                     setTileData(copy);
                     stop = true;
-                    console.log('first')
                 } else {
                     let end = tileData.find((tile) => typeof tile.tileVal === 'number');
                     if (!end) {
@@ -130,15 +269,20 @@ const Board = ({ playerName, player2Name, playerTurn, setPlayerTurn, symbol, set
                     }
                 }
             }
+            checkWin(copy)
         }
     }, [playerTurn])
 
     const handleRestartGame = () => {
+        if (status !== "Game Draw")
+            setSymbol(symbol === "O" ? "X" : "O")
+        if (status === "Computer Wins") {
+            playerTurn === playerName ? setPlayerTurn(player2Name) : setPlayerTurn(playerName);
+        }
+
         setStatus("")
         setTileData(initialState)
         setDisableBtn(false)
-        setPlayerTurn(playerTurn === playerName ? player2Name : playerName)
-        setSymbol(symbol === "O" ? "X" : "O")
         symbol === "O" ? setShowText("X Turn") : setShowText("O Turn")
         setVertices({
             h: '0',
@@ -153,6 +297,8 @@ const Board = ({ playerName, player2Name, playerTurn, setPlayerTurn, symbol, set
     return (
         <Wrapper>
             <h1 style={{ backgroundColor: "grey", marginTop: "0" }}>{showText}</h1>
+            <button className='stats-btn' onClick={() => setShowModal(!showModal)}>Show Stats</button>
+            {showModal && <Modal showModal={showModal} setShowModal={setShowModal} />}
             <div>
                 <svg height={vertices.h} width={vertices.w} style={{ position: "absolute" }}>
                     {/* <line x1="0" y1="20" x2="700" y2="600" style={{ stroke: "rgb(255,0,0)", strokeWidth: "5" }} /> */}
